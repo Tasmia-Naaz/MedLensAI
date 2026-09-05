@@ -1,0 +1,28 @@
+# Python Virtual Environment
+.venv/
+env/
+venv/
+ENV/
+
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environment Variables
+.env
+
+# Database & SQLite
+*.db
+*.sqlite3
+
+# Uploads (preserve folder structure)
+uploads/*
+!uploads/sample_reports/
+!uploads/sample_reports/*
+
+# Distribution / Packaging
+build/
+dist/
+*.egg-info/

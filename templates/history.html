@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block title %}History & Comparison — MedLens Clinical Intelligence{% endblock %}
+
+{% block content %}
+<div class="mb-4">
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+    <div>
+      <h2 class="fw-bold mb-1">Clinical History & Trend Analysis</h2>
+      <p class="text-muted mb-0">Longitudinal parameter tracking, report comparison, and patient timeline</p>
+    </div>
+    <div>
+      <span class="badge bg-light text-secondary border px-3 py-2">
+        <i class="bi bi-info-circle me-1"></i> Factual delta tracking — No disease diagnosis
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4 mb-4">
+  <!-- ==================== REPORT COMPARISON SECTION ==================== -->
+  <div class="col-lg-8">
+    <div class="card card-med mb-4">
+      <div class="card-header bg-white border-bottom py-3">
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
+          <h5 class="fw-bold mb-0">
+            <i class="bi bi-arrow-left-right text-primary me-2"></i>Report Comparison & Delta Analysis
+          </h5>
+          <span class="badge-provenance badge-report">🟩 Multi-Report Traceable</span>
+        </div>
+      </div>
+
+      <div class="card-body p-4">
+        <!-- Report Selection Controls -->
+        <div class="row g-3 align-items-end mb-4 bg-light p-3 rounded-3 border">
+          <div class="col-md-5">
+            <label class="form-label small fw-semibold text-muted">Select Previous Report</label>
+            <select class="form-select" id="prevReportSelect">
+              <option value="">Loading previous reports...</option>
+            </select>
+          </div>
+          <div class="col-md-5">
+            <label class="form-label small fw-semibold text-primary">Select Current Report</label>
+            <select class="form-select border-primary" id="currReportSelect">
+              <option value="">Loading current reports...</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <button type="button" class="btn btn-primary w-100" id="compareReportsBtn">
+              <i class="bi bi-sliders me-1"></i> Compare
+            </button>
+          </div>
+        </div>
+
+        <!-- Trend Line Chart (Chart.js) -->
+        <div class="mb-4 p-3 bg-white border rounded-3">
+          <h6 class="fw-bold text-dark mb-2">
+            <i class="bi bi-graph-up text-primary me-1"></i> Laboratory Parameter Comparison
+          </h6>
+          <div style="position: relative; height: 260px;">
+            <canvas id="comparisonChart"></canvas>
+          </div>
+          <div class="text-muted text-center small mt-2" style="font-size: 0.75rem;">
+            Comparative values plotted across selected accessions.
+          </div>
+        </div>
+
+        <!-- Comparison Table -->
+        <div class="table-responsive">
+          <table class="table table-hover align-middle border mb-0">
+            <thead class="table-light">
+              <tr>
+                <th class="ps-3">Test Parameter</th>
+                <th>Previous Value</th>
+                <th>Current Value</th>
+                <th>Absolute Change</th>
+                <th class="pe-3">Neutral Clinical Statement</th>
+              </tr>
+            </thead>
+            <tbody id="comparisonTableBody">
+              <!-- Loaded via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== REPORT HISTORY TABLE ==================== -->
+    <div class="card card-med">
+      <div class="card-header bg-white border-bottom py-3">
+        <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
+          <h5 class="fw-bold mb-0">
+            <i class="bi bi-archive-fill text-primary me-2"></i>Report History Archive
+          </h5>
+          <!-- Search & Filter Controls -->
+          <div class="d-flex gap-2 flex-wrap">
+            <div class="input-group input-group-sm" style="max-width: 220px;">
+              <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+              <input type="text" class="form-control" id="historySearchInput" placeholder="Search reports/tests...">
+            </div>
+            <select class="form-select form-select-sm" id="typeFilter" style="width: 120px;">
+              <option value="ALL">All Types</option>
+              <option value="Blood Test">Blood Test</option>
+              <option value="CBC">CBC</option>
+              <option value="Comprehensive Health">Health Check</option>
+            </select>
+            <select class="form-select form-select-sm" id="statusFilter" style="width: 120px;">
+              <option value="ALL">All Status</option>
+              <option value="Verified">Verified</option>
+              <option value="Processed">Processed</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th class="ps-4">Report Document</th>
+                <th>Panel Type</th>
+                <th>Record Date</th>
+                <th>Verification Status</th>
+                <th class="text-end pe-4">Action</th>
+              </tr>
+            </thead>
+            <tbody id="historyTableBody">
+              <!-- Loaded via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 4. PATIENT TIMELINE ==================== -->
+  <div class="col-lg-4">
+    <div class="card card-med h-100">
+      <div class="card-header bg-white border-bottom py-3">
+        <h5 class="fw-bold mb-0">
+          <i class="bi bi-calendar-range text-primary me-2"></i>Patient Clinical Timeline
+        </h5>
+        <div class="text-muted small">Chronological record accessions</div>
+      </div>
+
+      <div class="card-body p-4">
+        <div class="timeline" id="patientTimelineContainer">
+          <!-- Timeline items loaded via JavaScript -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/history.js"></script>
+{% endblock %}

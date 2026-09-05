@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}MedLens — Login{% endblock %}
+
+{% block body_content %}
+<div class="min-vh-100 d-flex align-items-center justify-content-center p-3" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);">
+  <div class="card card-med p-4 p-md-5 shadow-lg" style="max-width: 460px; width: 100%; border-radius: 1.25rem;">
+    
+    <!-- Brand Header -->
+    <div class="text-center mb-4">
+      <div class="d-inline-flex align-items-center justify-content-center bg-primary-subtle text-primary rounded-circle mb-3" style="width: 64px; height: 64px; font-size: 2rem;">
+        🩺
+      </div>
+      <h1 class="h3 fw-bold text-dark mb-1">MedLens</h1>
+      <p class="text-muted small mb-2">AI-Powered Clinical Information Intelligence</p>
+      <span class="badge bg-secondary-subtle text-secondary px-2 py-1" style="font-size: 0.72rem;">
+        <i class="bi bi-shield-exclamation me-1"></i> Non-Diagnostic Clinical Organizer
+      </span>
+    </div>
+
+    <!-- Alert Box for Errors -->
+    <div id="loginAlert" class="alert alert-danger py-2 small d-none" role="alert"></div>
+
+    <!-- Login Form -->
+    <form id="loginForm" novalidate>
+      <div class="mb-3">
+        <label for="loginEmail" class="form-label fw-semibold small text-muted">Email Address</label>
+        <div class="input-group">
+          <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-envelope"></i></span>
+          <input type="email" class="form-control border-start-0 ps-0" id="loginEmail" placeholder="name@example.com" required>
+        </div>
+        <div class="invalid-feedback">Please enter a valid email address.</div>
+      </div>
+
+      <div class="mb-4">
+        <label for="loginPassword" class="form-label fw-semibold small text-muted">Password</label>
+        <div class="input-group">
+          <span class="input-group-text bg-light border-end-0 text-muted"><i class="bi bi-lock"></i></span>
+          <input type="password" class="form-control border-start-0 ps-0" id="loginPassword" placeholder="••••••••" required>
+        </div>
+        <div class="invalid-feedback">Password is required.</div>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold mb-2" id="loginBtn">
+        <span class="spinner-border spinner-border-sm me-2 d-none" id="loginSpinner"></span>
+        Login to MedLens
+      </button>
+
+      <button type="button" class="btn btn-outline-secondary w-100 py-2 fw-semibold mb-3" data-bs-toggle="modal" data-bs-target="#registerModal">
+        Create Account
+      </button>
+    </form>
+
+    <hr class="my-3 text-muted">
+
+    <!-- Hackathon Quick Demo Button -->
+    <div class="bg-light p-3 rounded-3 border text-center">
+      <div class="small fw-bold text-dark mb-1">
+        <i class="bi bi-lightning-charge-fill text-warning"></i> Hackathon Quick Access
+      </div>
+      <p class="text-muted mb-2" style="font-size: 0.75rem;">
+        Click below to auto-fill preloaded demo credentials:
+      </p>
+      <button type="button" class="btn btn-sm btn-outline-primary w-100 fw-medium" id="fillDemoBtn">
+        Demo Login (demo@medlens.com)
+      </button>
+    </div>
+
+    <!-- Regulatory Notice -->
+    <p class="text-center text-muted mt-3 mb-0" style="font-size: 0.68rem; line-height: 1.2;">
+      MedLens organizes and explains information from medical records without diagnosing diseases or prescribing treatments.
+    </p>
+  </div>
+</div>
+
+<!-- Register Modal (Bootstrap Modal instead of separate page) -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header border-bottom">
+        <h5 class="modal-title fw-bold" id="registerModalLabel">Create New MedLens Account</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="registerForm" novalidate>
+        <div class="modal-body">
+          <div id="registerAlert" class="alert alert-danger py-2 small d-none" role="alert"></div>
+
+          <div class="mb-3">
+            <label for="regName" class="form-label small fw-semibold">Full Name</label>
+            <input type="text" class="form-control" id="regName" placeholder="Dr. Jane Doe" required>
+            <div class="invalid-feedback">Full name is required.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="regEmail" class="form-label small fw-semibold">Email Address</label>
+            <input type="email" class="form-control" id="regEmail" placeholder="jane@hospital.com" required>
+            <div class="invalid-feedback">A valid email address is required.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="regPassword" class="form-label small fw-semibold">Password</label>
+            <input type="password" class="form-control" id="regPassword" placeholder="Minimum 6 characters" minlength="6" required>
+            <div class="invalid-feedback">Password must be at least 6 characters.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="regConfirmPassword" class="form-label small fw-semibold">Confirm Password</label>
+            <input type="password" class="form-control" id="regConfirmPassword" placeholder="Repeat password" required>
+            <div class="invalid-feedback" id="confirmPwdFeedback">Passwords must match.</div>
+          </div>
+        </div>
+        <div class="modal-footer border-top bg-light">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="regSubmitBtn">
+            <span class="spinner-border spinner-border-sm me-2 d-none" id="regSpinner"></span>
+            Register & Continue
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/login.js"></script>
+{% endblock %}
